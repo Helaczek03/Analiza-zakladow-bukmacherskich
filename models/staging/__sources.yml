@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: inzynierka
+    database: workspace
+    schema: inzynierka
+    tables:
+      - name: kupony
+      - name: stare_zdarzenia
+      - name: nowe_zdarzenia

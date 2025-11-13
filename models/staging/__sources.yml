@@ -6,5 +6,8 @@ sources:
     schema: inzynierka
     tables:
       - name: kupony
+        description: Dane odnośnie kuponów
       - name: stare_zdarzenia
+        description: Zdarzenia otrzymane ze starej platformy sts
       - name: nowe_zdarzenia
+        description: Zdarzenia otrzymane z nowej platformy sts

@@ -6,7 +6,6 @@ source as (
 final as (
     select
         try_cast(ticket_number as bigint) as id_kuponu,
-        id_event as id_spotkania,
         cast(replace(odds_value_bet, ',', '.') as numeric(10,2))as kurs,
         opportunity as mecz,
         market as rodzaj_zakladu,

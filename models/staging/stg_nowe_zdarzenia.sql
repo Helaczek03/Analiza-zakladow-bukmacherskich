@@ -14,7 +14,7 @@ final as (
         line_name as rodzaj_zakladu,
         cast(replace(odds, ',', '.') as numeric(10,2)) as kurs,
         zagrany_typ as co_obstawiono,
-        status_twojego_zdarzenia as czy_wygrane_zdarzenie
+        status_twojego_zdarzenia as czy_wygrane_zdarzenie --ujednolicenie
     from
         source
 )

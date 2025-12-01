@@ -37,9 +37,13 @@ final as (
         TO_TIMESTAMP(final_time, 'MM.dd.yyyy HH:mm:ss') as data_i_godzina_zagrania,
         cast(replace(stawka, ',', '.') as numeric(10, 2)) as stawka,
         cast(replace(`Wygrana (po opodatkowaniu 12%)`, ',', '.') as numeric(10,2)) as wygrana,
-        cast(replace(kurs, ',', '.') as numeric(10, 2)) as kurs,
+        cast(replace(kurs, ',', '.') as numeric(10, 2)) as kurs_kuponu,
         `Status kuponu` as status_kuponu,
-        `Live / Prematch` as live_czy_prematch
+        case `Live / Prematch`
+            when 'live' then 'na żywo'
+            when 'prematch' then 'przed meczem'
+            else null
+        end as kiedy_zagrano
     from source
     join modified_time
     using (`Numer kuponu`)

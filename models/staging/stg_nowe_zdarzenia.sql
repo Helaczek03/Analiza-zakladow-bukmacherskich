@@ -11,7 +11,7 @@ final as (
         tournament_name as nazwa_rozgrywek,
         sport_name as dyscyplina,
         line_name as rodzaj_zakladu,
-        cast(replace(odds, ',', '.') as numeric(10,2)) as kurs,
+        cast(replace(odds, ',', '.') as numeric(10,2)) as kurs_zdarzenia,
         zagrany_typ as co_obstawiono,
         case status_twojego_zdarzenia
             when 'zwycięski' then 'tak'

@@ -1,4 +1,4 @@
-with 
+with
 source_1 as (
     select * from {{ ref('stg_stare_zdarzenia') }}
 ),
@@ -8,13 +8,9 @@ source_2 as (
 ),
 
 final as (
-    select *
-    from source_1
-
+    select * from source_1
     union all
-
-    select *
-    from source_2
+    select * from source_2
 )
 
 select * from final

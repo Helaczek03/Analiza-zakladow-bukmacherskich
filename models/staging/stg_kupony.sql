@@ -35,8 +35,8 @@ final as (
     select 
         cast(`Numer kuponu` as bigint) as id_kuponu,
         TO_TIMESTAMP(final_time, 'MM.dd.yyyy HH:mm:ss') as data_i_godzina_zagrania,
-        cast(replace(stawka, ',', '.') as numeric(10, 2)) as stawka,
-        cast(replace(`Wygrana (po opodatkowaniu 12%)`, ',', '.') as numeric(10,2)) as wygrana,
+        cast(replace(stawka, ',', '.') as numeric(10, 2)) as postawiona_kwota,
+        coalesce(cast(replace(`Wygrana (po opodatkowaniu 12%)`, ',', '.') as decimal(10,2)), 0) as wygrana_kwota,
         cast(replace(kurs, ',', '.') as numeric(10, 2)) as kurs_kuponu,
         `Status kuponu` as status_kuponu,
         case `Live / Prematch`

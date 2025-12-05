@@ -9,7 +9,12 @@ final as (
         number as id_kuponu,
         match_name as mecz,
         tournament_name as nazwa_rozgrywek,
-        sport_name as dyscyplina,
+        case sport_name
+            when 'Darts' then 'Dart'
+            when 'League of Legends' then 'Esport'
+            when '2022 FIFA World Cup' then 'Piłka Nożna'
+            else sport_name
+        end as dyscyplina,
         line_name as rodzaj_zakladu,
         zagrany_typ as co_obstawiono,
         cast(replace(odds, ',', '.') as numeric(10,2)) as kurs_zdarzenia,

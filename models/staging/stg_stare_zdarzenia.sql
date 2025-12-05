@@ -9,7 +9,12 @@ final as (
         try_cast(ticket_number as bigint) as id_kuponu,
         opportunity as mecz,
         league_name as nazwa_rozgrywek,
-        sport_name as dyscyplina,
+        case sport_name
+            when 'Darts' then 'Dart'
+            when 'League of Legends' then 'Esport'
+            when '2022 FIFA World Cup' then 'Piłka Nożna'
+            else sport_name
+        end as dyscyplina,
         market as rodzaj_zakladu,
         typ as co_obstawiono,
         cast(replace(odds_value_bet, ',', '.') as numeric(10,2)) as kurs_zdarzenia,

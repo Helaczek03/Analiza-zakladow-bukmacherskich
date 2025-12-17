@@ -1,22 +1,24 @@
 with
 gospodarze as (
     select distinct 
-        trim(get(split(mecz, ' - '), 0)) AS `druzyny/zawodnicy`,
-        dyscyplina
+        trim(get(split(mecz, ' - '), 0)) AS `druzyna/zawodnik`,
+        dyscyplina,
+        data_zaladowania
     from 
         {{ ref('core_int_zdarzenia') }}
     where 
-        dyscyplina not in ('Sporty Wirtualne', 'Inne', 'BetGames')
+        dyscyplina not in ('Zakłady Specjalne', 'Sporty Wirtualne', 'Inne', 'BetGames')
 ),
 
 goscie as (
     select distinct 
-        trim(get(split(mecz, ' - '), 1)) AS `druzyny/zawodnicy`,
-        dyscyplina
+        trim(get(split(mecz, ' - '), 1)) AS `druzyna/zawodnik`,
+        dyscyplina,
+        data_zaladowania
     from 
         {{ ref('core_int_zdarzenia') }}
     where 
-        dyscyplina not in ('Sporty Wirtualne', 'Inne', 'BetGames')        
+        dyscyplina not in ('Zakłady Specjalne', 'Sporty Wirtualne', 'Inne', 'BetGames')        
 ),
 
 unioned as (
@@ -25,12 +27,32 @@ unioned as (
     select * from goscie
 ),
 
+unioned_max_date as (
+    select
+        `druzyna/zawodnik`,
+        dyscyplina,
+        min(data_zaladowania) as data_zaladowania
+    from unioned
+    group by `druzyna/zawodnik`, dyscyplina
+),
+
 final as (
     select
-        row_number() over (order by `druzyny/zawodnicy`) as id,
+        row_number() over (order by `druzyna/zawodnik`) as id,
+        case
+            when size(filter(split(`druzyna/zawodnik`, '[ -,]+'), w -> length(w) >= 4)) > 0
+                then element_at(filter(split(`druzyna/zawodnik`, '[ -,]+'), w -> length(w) >= 4), 1)
+            else `druzyna/zawodnik`
+        end as pierwsze_dluzsze_slowo,
         *
     from
-        unioned
+        unioned_max_date
 )
 
 select * from final
+
+-- zrobic nowa tabele w ktorej bedzie nazwa i wspolna nazwa dla danej druzyny
+-- i dyscypliny oraz status (potwierdzony, niepotwierdzony)
+-- wspolna czesc w nazwie -> najdluzsza nazwa druzyny sposrod kandydatow
+-- jesli dana druzyna ma tylko 1 nazwe to mozna ja dac jako potwierdzona ?
+-- na koncu sprawdzenie niepotwierdzonych statusow

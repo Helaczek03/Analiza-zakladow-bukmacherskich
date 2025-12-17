@@ -1,14 +1,52 @@
 with
 source as (
-    select distinct mecz, nazwa_rozgrywek, dyscyplina from {{ ref('core_int_zdarzenia') }}
+    select distinct 
+        mecz
+    from 
+        {{ ref('core_int_zdarzenia') }}
+    where 
+        dyscyplina not in ('Zakłady Specjalne', 'Sporty Wirtualne', 'Inne', 'BetGames')
 ),
 
-final as (
+slownik as (
+    select * from {{ ref('core_druzyny_zawodnicy_slownik') }}
+),
+
+mecze as (
     select
-        row_number() over (order by mecz, nazwa_rozgrywek, dyscyplina) as id,
-        *
+        mecz,
+        trim(get(split(mecz, ' - '), 0)) AS gospodarz,
+        trim(get(split(mecz, ' - '), 1)) AS gosc
     from 
         source
+    order by mecz
+),
+
+ujednolicone as (
+    select
+        m.mecz,
+        s.ujednolicona_nazwa as gospodarz,
+        s2.ujednolicona_nazwa as gosc,
+        case
+            when s.ujednolicona_nazwa is null and s2.ujednolicona_nazwa is null --gospodarz i gosc null
+            then mecz
+            when s.ujednolicona_nazwa is null and s2.ujednolicona_nazwa is not null --gospodarz null, gosc nie
+            then s2.ujednolicona_nazwa
+            when s.ujednolicona_nazwa is not null and s2.ujednolicona_nazwa is null --gospodarz nie null, gosc null
+            then s.ujednolicona_nazwa
+            else s.ujednolicona_nazwa || ' - ' || s2.ujednolicona_nazwa
+        end as ujednolicony_mecz
+    from 
+        mecze m
+    left join 
+        slownik s
+    on 
+        m.gospodarz = s.`druzyna/zawodnik`
+    left join 
+        slownik s2
+    on 
+        m.gosc = s2.`druzyna/zawodnik`
+    order by mecz
 )
 
-select * from final
+select * from ujednolicone

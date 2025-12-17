@@ -1,3 +1,22 @@
+{{
+  config(
+    materialized = 'incremental',
+    incremental_strategy = 'merge',
+    unique_key = 'id_zdarzenia',
+
+    merge_update_columns = [
+      'id_kuponu',
+      'mecz',
+      'nazwa_rozgrywek',
+      'dyscyplina',
+      'rodzaj_zakladu',
+      'co_obstawiono',
+      'kurs_zdarzenia',
+      'czy_wygrane_zdarzenie'
+    ]
+  )
+}}
+
 with
 source as (
     select * from {{ source('inzynierka', 'stare_zdarzenia') }}
@@ -22,7 +41,8 @@ final as (
             when 1 then 'tak'
             when 0 then 'nie'
             else 'anulowane'
-        end as czy_wygrane_zdarzenie
+        end as czy_wygrane_zdarzenie,
+        current_timestamp() as data_zaladowania
     from
         source
     where 1=1

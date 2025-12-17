@@ -1,3 +1,20 @@
+{{
+  config(
+    materialized = 'incremental',
+    incremental_strategy = 'merge',
+    unique_key = 'id_kuponu',
+
+    merge_update_columns = [
+      'data_i_godzina_zagrania',
+      'postawiona_kwota',
+      'wygrana_kwota',
+      'kurs_kuponu',
+      'status_kuponu',
+      'kiedy_zagrano'
+    ]
+  )
+}}
+
 with
 source as (
     select * from {{ source('inzynierka', 'kupony') }}
@@ -43,8 +60,10 @@ final as (
             when 'live' then 'na żywo'
             when 'prematch' then 'przed meczem'
             else null
-        end as kiedy_zagrano
-    from source
+        end as kiedy_zagrano,
+        --TO_TIMESTAMP('2025-11-01T16:51:42+00:00') as data_zaladowania
+        current_timestamp() as data_zaladowania
+    from source s
     join modified_time
     using (`Numer kuponu`)
 )

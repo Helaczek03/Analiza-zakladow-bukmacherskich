@@ -7,6 +7,7 @@
     merge_update_columns = [
       'id_kuponu',
       'mecz',
+      'id_rozgrywek',
       'nazwa_rozgrywek',
       'dyscyplina',
       'rodzaj_zakladu',
@@ -27,6 +28,7 @@ final as (
         concat(ticket_number, '_', row_number() over (partition by ticket_number order by ticket_number)) as id_zdarzenia,
         try_cast(ticket_number as bigint) as id_kuponu,
         opportunity as mecz,
+        id_event as id_rozgrywek,
         league_name as nazwa_rozgrywek,
         case sport_name
             when 'Darts' then 'Dart'
@@ -42,6 +44,7 @@ final as (
             when 0 then 'nie'
             else 'anulowane'
         end as czy_wygrane_zdarzenie,
+        --TO_TIMESTAMP('2025-11-01T16:51:42+00:00') as data_zaladowania
         current_timestamp() as data_zaladowania
     from
         source

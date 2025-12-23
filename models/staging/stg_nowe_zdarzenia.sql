@@ -7,6 +7,7 @@
     merge_update_columns = [
       'id_kuponu',
       'mecz',
+      'kraj_rozgrywek',
       'nazwa_rozgrywek',
       'dyscyplina',
       'rodzaj_zakladu',
@@ -27,6 +28,7 @@ final as (
         odds_number as id_zdarzenia,
         number as id_kuponu,
         match_name as mecz,
+        category_name as kraj_rozgrywek,
         tournament_name as nazwa_rozgrywek,
         case sport_name
             when 'Darts' then 'Dart'
@@ -42,6 +44,7 @@ final as (
             when 'przegrany' then 'nie'
             else 'anulowane'
         end as czy_wygrane_zdarzenie,
+        --TO_TIMESTAMP('2025-11-01T16:51:42+00:00') as data_zaladowania
         current_timestamp() as data_zaladowania
     from
         source

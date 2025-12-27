@@ -9,11 +9,12 @@ source as (
 
 numery_na_nazwy as (
     select
+        rodzaj_zakladu,
         case
             when rodzaj_zakladu like '%1. drużyna%' then replace(rodzaj_zakladu, '1. drużyna', 'Gospodarz')
             when rodzaj_zakladu like '%2. drużyna%' then replace(rodzaj_zakladu, '2. drużyna', 'Gość')
             else rodzaj_zakladu
-        end as rodzaj_zakladu,
+        end as pomocniczy_rodzaj_zakladu, --uzyty po to aby mozna bylo uzyc kolumny rodzaj zakladu do zrobienia joina
         co_obstawiono
     from
         source
@@ -23,7 +24,7 @@ final as(
     select
         rodzaj_zakladu,
         co_obstawiono,
-        case rodzaj_zakladu
+        case pomocniczy_rodzaj_zakladu
             when 'dokładny wynik (3)' then 'dokładny wynik'
             when '1x2' then 'Mecz'
             when 'Mecz - SuperOferta' then 'Mecz'
@@ -40,7 +41,7 @@ final as(
             when 'podwójna szansa' then 'Mecz'
             when 'Podwójna szansa' then 'Mecz'
             when 'zwycięzca walki' then 'Zwycięzca'
-            else rodzaj_zakladu
+            else pomocniczy_rodzaj_zakladu
         end as ujednolicony_rodzaj_zakladu,
 
         case co_obstawiono

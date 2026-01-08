@@ -24,7 +24,11 @@ final as (
         s3.ujednolicony_rodzaj_zakladu as rodzaj_zakladu,
         s3.ujednolicone_co_obstawiono as co_obstawiono,
         s1.kurs_zdarzenia,
-        s1.czy_wygrane_zdarzenie,
+        case s1.czy_wygrane_zdarzenie
+            when 'tak' then 'wygrane'
+            when 'nie' then 'przegrane'
+            else s1.czy_wygrane_zdarzenie
+        end as status_zdarzenia,
         s1.data_zaladowania
     from
         source_1 s1

@@ -1,15 +1,15 @@
 with
 source as (
     select distinct
-        kiedy_zagrano
+        dyscyplina
     from
-        {{ ref('stg_kupony') }}
+        {{ ref('core_zdarzenia') }}
 ),
 
 final as (
     select
-        abs(xxhash64(kiedy_zagrano)) as id,
-        kiedy_zagrano
+        abs(xxhash64(dyscyplina)) as id_dyscpliny,
+        dyscyplina
     from
         source
 )

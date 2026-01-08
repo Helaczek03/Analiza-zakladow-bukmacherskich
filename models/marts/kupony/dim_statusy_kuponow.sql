@@ -8,7 +8,7 @@ source as (
 
 final as (
     select
-        row_number() over (order by status_kuponu) as id,
+        abs(xxhash64(status_kuponu)) as id,
         status_kuponu
     from
         source

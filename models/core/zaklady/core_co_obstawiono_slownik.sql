@@ -35,7 +35,7 @@ final as(
             when 'winner' then 'Zwycięzca'
             when 'zwycięzca' then 'Zwycięzca'
             when 'zwycięzca (z dogrywką)' then 'Zwycięzca'
-            when 'podwójna szansa' then 'Podwójna szansa'
+            when 'podwójna szansa' then 'Mecz'
             when 'Szybki Strzał (maksymalna stawka: 100 zł)' then 'SZYBKI STRZAŁ (max 100 PLN)'
             when 'Szybki Strzał (maksymalna stawka: 100 zł)' then 'SZYBKI STRZAŁ (max 200 PLN)'
             when 'podwójna szansa' then 'Mecz'

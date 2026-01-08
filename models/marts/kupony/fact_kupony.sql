@@ -4,7 +4,8 @@ source_1 as (
 ),
 
 source_2 as (
-    select * from {{ ref('dim_status_kuponu') }}
+    select * from {{ ref('dim_statusy_kuponow') }}
+    where status_kuponu != 'zwrot'
 ),
 
 source_3 as (
@@ -15,6 +16,7 @@ final as (
     select
         s1.id_kuponu,
         s1.data_i_godzina_zagrania,
+        date_trunc('hour', s1.data_i_godzina_zagrania) as zaokraglona_data_i_godzina,
         s1.postawiona_kwota,
         s1.wygrana_kwota,
         s1.kurs_kuponu,
@@ -31,3 +33,9 @@ final as (
 )
 
 select * from final
+
+-- co mozna z tego zobaczyc
+-- procent wygranych kuponow calosciowy,
+-- bilans wygranych i przegranych kuponow (kwota calosciowa i z podzialem na lata, kwartaly, miesiace),
+-- sprawdzenie czy dzien tygodnia (weekend lub nie), godzina stawiania ma wplyw na procent wygranych kuponow,
+-- procent wygranych z podzialem na to kiedy stawiano (przed meczem, na zywo)

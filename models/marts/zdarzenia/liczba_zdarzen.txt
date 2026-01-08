@@ -1,0 +1,18 @@
+-- LICZBA ZDARZEN
+-- pilka nozna 1658 
+-- tenis 892
+-- pilka reczna 269
+
+-- PIŁKA NOŻNA
+-- mecz gosc 647
+-- mecz gospodarz 547
+-- mecz remis lub gosc 116
+-- mecz gospodarz lub remis 114
+
+-- TENIS
+-- zwyciezca gospodarz 373
+-- zwyciezca gosc 298
+
+-- PIŁKA RĘCZNA
+-- mecz gosc 132
+-- mecz gospodarz 104

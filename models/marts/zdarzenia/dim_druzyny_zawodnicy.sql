@@ -1,14 +1,14 @@
 with
 gospodarze as (
     select distinct
-        gospodarz as `druzyna/zawodnik`
+        gospodarz as druzyna_zawodnik
     from
         {{ ref('core_zdarzenia') }}
 ),
 
 goscie as (
     select distinct
-        gosc as `druzyna/zawodnik`
+        gosc as druzyna_zawodnik
     from
         {{ ref('core_zdarzenia') }}
 ),
@@ -21,8 +21,8 @@ druzyny_zawodnicy as (
 
 final as (
     select
-        abs(xxhash64(`druzyna/zawodnik`)) as id_druzyny_zawodnika,
-        `druzyna/zawodnik`
+        abs(xxhash64(druzyna_zawodnik)) as id_druzyny_zawodnika,
+        druzyna_zawodnik
     from
         druzyny_zawodnicy
 )

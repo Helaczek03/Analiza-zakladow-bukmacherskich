@@ -15,8 +15,8 @@ unioned as (
 
 final as (
     select
-        `druzyna/zawodnik`,
-        case `druzyna/zawodnik`
+        druzyna_zawodnik,
+        case druzyna_zawodnik
             when 'AGO ROGUE' then 'Rogue'
             when 'Fenix Toulouse Handball' then 'Toulouse'
             when 'Puławy' then 'KS Azoty Puławy'
@@ -28,7 +28,7 @@ final as (
         end as ujednolicona_nazwa
     from
         unioned
-    where `druzyna/zawodnik` not in 
+    where druzyna_zawodnik not in 
     ('SZYBKI STRZAŁ (MAX 200 PLN)', 'co najmniej 1 VAR sędziego głównego przy monitorze')
 )
 

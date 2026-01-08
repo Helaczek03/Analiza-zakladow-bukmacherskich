@@ -49,10 +49,10 @@ final as (
         source s
     join
         druzyny_zawodnicy dz
-        on s.gospodarz = dz.`druzyna/zawodnik`
+        on s.gospodarz = dz.druzyna_zawodnik
     join
         druzyny_zawodnicy dz2
-        on s.gosc = dz2.`druzyna/zawodnik`
+        on s.gosc = dz2.druzyna_zawodnik
     join
         dyscypliny d
         on s.dyscyplina = d.dyscyplina

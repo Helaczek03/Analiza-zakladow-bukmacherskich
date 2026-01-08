@@ -41,11 +41,11 @@ ujednolicone as (
     left join 
         slownik s
     on 
-        m.gospodarz = s.`druzyna/zawodnik`
+        m.gospodarz = s.druzyna_zawodnik
     left join 
         slownik s2
     on 
-        m.gosc = s2.`druzyna/zawodnik`
+        m.gosc = s2.druzyna_zawodnik
     order by mecz
 )
 

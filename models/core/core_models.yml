@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: core_int_zdarzenia
+    columns:
+      - name: id_zdarzenia
+        tests:
+          - unique
+          - not_null

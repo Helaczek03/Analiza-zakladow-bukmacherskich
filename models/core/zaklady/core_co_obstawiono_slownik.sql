@@ -20,6 +20,8 @@ numery_na_nazwy as (
         source
 ),
 
+
+
 final as(
     select
         rodzaj_zakladu,

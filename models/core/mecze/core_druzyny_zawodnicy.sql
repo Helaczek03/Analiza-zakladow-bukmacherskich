@@ -1,7 +1,7 @@
 with
 gospodarze as (
     select distinct 
-        trim(get(split(mecz, ' - '), 0)) AS `druzyna/zawodnik`,
+        trim(get(split(mecz, ' - '), 0)) AS druzyna_zawodnik,
         dyscyplina,
         data_zaladowania
     from 
@@ -12,7 +12,7 @@ gospodarze as (
 
 goscie as (
     select distinct 
-        trim(get(split(mecz, ' - '), 1)) AS `druzyna/zawodnik`,
+        trim(get(split(mecz, ' - '), 1)) AS druzyna_zawodnik,
         dyscyplina,
         data_zaladowania
     from 
@@ -29,20 +29,20 @@ unioned as (
 
 unioned_max_date as (
     select
-        `druzyna/zawodnik`,
+        druzyna_zawodnik,
         dyscyplina,
         min(data_zaladowania) as data_zaladowania
     from unioned
-    group by `druzyna/zawodnik`, dyscyplina
+    group by druzyna_zawodnik, dyscyplina
 ),
 
 final as (
     select
-        row_number() over (order by `druzyna/zawodnik`) as id,
+        row_number() over (order by druzyna_zawodnik) as id,
         case
-            when size(filter(split(`druzyna/zawodnik`, '[ -,]+'), w -> length(w) >= 4)) > 0
-                then element_at(filter(split(`druzyna/zawodnik`, '[ -,]+'), w -> length(w) >= 4), 1)
-            else `druzyna/zawodnik`
+            when size(filter(split(druzyna_zawodnik, '[ -,]+'), w -> length(w) >= 4)) > 0
+                then element_at(filter(split(druzyna_zawodnik, '[ -,]+'), w -> length(w) >= 4), 1)
+            else druzyna_zawodnik
         end as pierwsze_dluzsze_slowo,
         *
     from

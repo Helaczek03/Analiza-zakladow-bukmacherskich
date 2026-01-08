@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_kupony
+    columns:
+      - name: id_kuponu
+        tests:
+          - unique
+          - not_null
+  
+  - name: stg_nowe_zdarzenia
+    columns:
+      - name: id_zdarzenia
+        tests:
+          - unique
+          - not_null
+  
+  - name: stg_stare_zdarzenia
+    columns:
+      - name: id_zdarzenia
+        tests:
+          - unique
+          - not_null

@@ -17,8 +17,8 @@ pojedyncze_nazwy as (
 ujednolicone_nazwy as (
     select
         --pierwsze_dluzsze_slowo, -- czy tutaj potrzebne ?
-        `druzyna/zawodnik`,
-        case `druzyna/zawodnik`
+        druzyna_zawodnik,
+        case druzyna_zawodnik
             when 'Abdusattorov N.' then 'Abdusattorov, Nodirbek'
             when 'UD Almería' then 'UD Almeria'
             when 'Andorra' then 'Andora'
@@ -178,7 +178,7 @@ ujednolicone_nazwy as (
             when 'de Jong J.' then 'de Jong, Jesper'
             when 'Yemen' then 'Jemen'
 
-            else `druzyna/zawodnik`
+            else druzyna_zawodnik
         end as ujednolicona_nazwa,
         dyscyplina,
         data_zaladowania
@@ -196,7 +196,7 @@ ujednolicone_nazwy as (
 
 final as (
     select
-        `druzyna/zawodnik`,
+        druzyna_zawodnik,
         ujednolicona_nazwa
     from
         ujednolicone_nazwy

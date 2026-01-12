@@ -1,3 +1,10 @@
+-- incremental dodaje tylko nowe dane
+-- id_zdarzenia - kolumna po ktorej merge indentyfikuje czy dany rekord jest juz w tabeli
+-- merge 
+    -- w przypadku gdy nie ma jeszcze danego id_zdarzenia doda nowy rekord,
+    -- w przypadku gdy w tabeli jest juz dane id_zdarzenia to zrobi update kolumn zawartych w merge_update_columns
+-- w merge_upadate_columns nie ma data_zaladowania po to aby pozostala taka jak byla poprzednio
+
 {{
   config(
     materialized = 'incremental',

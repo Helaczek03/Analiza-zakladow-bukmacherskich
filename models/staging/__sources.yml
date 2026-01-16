@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: inzynierka
+  - name: raw
     database: workspace
-    schema: inzynierka
+    schema: raw
     tables:
       - name: kupony
         description: Dane odnośnie kuponów

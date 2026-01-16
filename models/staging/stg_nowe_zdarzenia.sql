@@ -27,13 +27,13 @@
 
 with
 source as (
-    select * from {{ source('inzynierka', 'nowe_zdarzenia') }}
+    select * from {{ source('raw', 'nowe_zdarzenia') }}
 ),
 
 final as (
     select
         odds_number as id_zdarzenia,
-        number as id_kuponu,
+        try_cast(number as bigint) as id_kuponu,
         match_name as mecz,
         category_name as kraj_rozgrywek,
         tournament_name as nazwa_rozgrywek,
@@ -51,8 +51,8 @@ final as (
             when 'przegrany' then 'nie'
             else 'anulowane'
         end as czy_wygrane_zdarzenie,
-        --TO_TIMESTAMP('2025-11-01T16:51:42+00:00') as data_zaladowania
-        current_timestamp() as data_zaladowania
+        TO_TIMESTAMP('2025-11-01T16:51:42+00:00') as data_zaladowania
+        --current_timestamp() as data_zaladowania
     from
         source
     where 1=1

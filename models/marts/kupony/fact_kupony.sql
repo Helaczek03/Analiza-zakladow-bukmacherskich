@@ -17,6 +17,7 @@ final as (
         s1.id_kuponu,
         s1.data_i_godzina_zagrania,
         date_trunc('hour', s1.data_i_godzina_zagrania) as zaokraglona_data_i_godzina,
+        row_number() over (partition by date(data_i_godzina_zagrania) order by data_i_godzina_zagrania) as ktory_kupon_danego_dnia,
         s1.postawiona_kwota,
         s1.wygrana_kwota,
         s1.kurs_kuponu,

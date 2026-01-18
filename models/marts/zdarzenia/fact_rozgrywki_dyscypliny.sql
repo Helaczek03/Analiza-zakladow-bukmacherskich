@@ -2,6 +2,7 @@ with
 source as (
     select
         id_zdarzenia,
+        kurs_zdarzenia,
         nazwa_rozgrywek,
         dyscyplina,
         status_zdarzenia
@@ -25,6 +26,8 @@ statusy as (
 final as (
     select
         s.id_zdarzenia,
+        s.kurs_zdarzenia,
+        round(1 / s.kurs_zdarzenia, 2) as prawdopodobienstwo_wygranej,
         r.id_nazwy_rozgrywek,
         d.id_dyscpliny,
         st.id_statusu_zdarzenia
